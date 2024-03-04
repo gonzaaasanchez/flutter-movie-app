@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/app/presentation/routes/app_routes.dart';
-import 'package:movie_app/app/presentation/routes/routes.dart';
+
+import 'presentation/routes/app_routes.dart';
+import 'presentation/routes/routes.dart';
 
 class Application extends StatelessWidget {
   const Application({super.key});
@@ -9,7 +10,7 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: Routes.splash,
-      routes: appRoutes ,
+      routes: appRoutes,
     );
   }
 }
