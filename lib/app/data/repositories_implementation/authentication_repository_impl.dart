@@ -3,14 +3,14 @@ import '../../domain/repositories/authentication_repository.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
-  Future<User> getUserData() {
-    return Future.value(
-      User(),
-    );
+  Future<bool> get isLogged {
+    return Future.value(true);
   }
 
   @override
-  Future<bool> get isLogged {
-    return Future.value(true);
+  Future<User?> getUserData() {
+    return Future.value(
+      User(),
+    );
   }
 }
