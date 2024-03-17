@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 import '../../domain/either.dart';
@@ -27,6 +29,8 @@ class Http {
     Map<String, dynamic> body = const {},
     bool needsAuthentication = true,
   }) async {
+    Map<String, dynamic> logs = {};
+    StackTrace? stackTrace;
     try {
       if (needsAuthentication) {}
       Uri url = Uri.parse(
@@ -45,6 +49,12 @@ class Http {
       };
       late final Response response;
       final bodyString = jsonEncode(body);
+
+      logs = {
+        'url': url.toString(),
+        'method': method.name,
+        'body': body,
+      };
       switch (method) {
         case HttpMethod.get:
           response = await _client.get(
@@ -81,6 +91,12 @@ class Http {
           );
           break;
       }
+      logs = {
+        ...logs,
+        'startTime': DateTime.now().toString(),
+        'statusCode': response.statusCode,
+        'responseBody': response.body,
+      };
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return Either.right(
           onSucess(response.body),
@@ -91,9 +107,18 @@ class Http {
           statusCode: response.statusCode,
         ),
       );
-    } catch (e) {
+    } catch (e, s) {
+      stackTrace = s;
+      logs = {
+        ...logs,
+        'exception': e.runtimeType,
+      };
       // ClientException -> for web
       if (e is SocketException || e is ClientException) {
+        logs = {
+          ...logs,
+          'exception': 'NetworkException',
+        };
         return Either.left(
           HttpFailure(
             exception: NetworkException(),
@@ -105,6 +130,21 @@ class Http {
           exception: e,
         ),
       );
+    } finally {
+      logs = {
+        ...logs,
+        'endTime': DateTime.now().toString(),
+      };
+      if (kDebugMode) {
+        log(
+          '''
+--------------------------------------
+${const JsonEncoder.withIndent(' ').convert(logs)},
+--------------------------------------
+''',
+          stackTrace: stackTrace,
+        );
+      }
     }
   }
 }
