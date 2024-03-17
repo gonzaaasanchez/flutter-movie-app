@@ -18,8 +18,9 @@ class Http {
   final String _baseUrl;
   final String _apiKey;
 
-  Future<Either<HttpFailure, String>> request(
+  Future<Either<HttpFailure, R>> request<R>(
     String path, {
+    required R Function(String responseBody) onSucess,
     HttpMethod method = HttpMethod.get,
     Map<String, String> headers = const {},
     Map<String, String> queryParams = const {},
@@ -81,7 +82,9 @@ class Http {
           break;
       }
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Either.right(response.body);
+        return Either.right(
+          onSucess(response.body),
+        );
       }
       return Either.left(
         HttpFailure(

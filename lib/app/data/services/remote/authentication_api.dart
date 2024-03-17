@@ -11,24 +11,37 @@ class AuthenticationApi {
 
   final Http _http;
 
+  Either<SignInFailure, String> _handleFailure(HttpFailure failure) {
+    if (failure.statusCode != null) {
+      switch (failure.statusCode) {
+        case 401:
+          return Either.left(SignInFailure.unauthorized);
+        case 404:
+          return Either.left(SignInFailure.notFound);
+        default:
+          return Either.left(SignInFailure.unknown);
+      }
+    }
+    if (failure.exception is NetworkException) {
+      return Either.left(SignInFailure.network);
+    }
+    return Either.left(SignInFailure.unknown);
+  }
+
   Future<Either<SignInFailure, String>> createRequestToken() async {
     final result = await _http.request(
       '/authentication/token/new',
       needsAuthentication: true,
-    );
-    return result.when(
-      (failure) {
-        if (failure.exception is NetworkException) {
-          return Either.left(SignInFailure.network);
-        }
-        return Either.left(SignInFailure.unknown);
-      },
-      (responseBody) {
+      onSucess: (responseBody) {
         final json = Map<String, dynamic>.from(
           jsonDecode(responseBody),
         );
-        return Either.right(json['request_token'] as String);
+        return json['request_token'] as String;
       },
+    );
+    return result.when(
+      _handleFailure,
+      (requestToken) => Either.right(requestToken),
     );
   }
 
@@ -46,30 +59,16 @@ class AuthenticationApi {
         'password': password,
         'request_token': requestToken,
       },
-    );
-    return result.when(
-      (failure) {
-        if (failure.statusCode != null) {
-          switch (failure.statusCode) {
-            case 401:
-              return Either.left(SignInFailure.unauthorized);
-            case 404:
-              return Either.left(SignInFailure.notFound);
-            default:
-              return Either.left(SignInFailure.unknown);
-          }
-        }
-        if (failure.exception is NetworkException) {
-          return Either.left(SignInFailure.network);
-        }
-        return Either.left(SignInFailure.unknown);
-      },
-      (responseBody) {
+      onSucess: (responseBody) {
         final json = Map<String, dynamic>.from(
           jsonDecode(responseBody),
         );
-        return Either.right(json['request_token'] as String);
+        return json['request_token'] as String;
       },
+    );
+    return result.when(
+      _handleFailure,
+      (newRequestToken) => Either.right(newRequestToken),
     );
   }
 
@@ -82,20 +81,16 @@ class AuthenticationApi {
       body: {
         'request_token': requestToken,
       },
-    );
-    return result.when(
-      (failure) {
-        if (failure.exception is NetworkException) {
-          return Either.left(SignInFailure.network);
-        }
-        return Either.left(SignInFailure.unknown);
-      },
-      (responseBody) {
+      onSucess: (responseBody) {
         final json = Map<String, dynamic>.from(
           jsonDecode(responseBody),
         );
-        return Either.right(json['session_id'] as String);
+        return json['session_id'] as String;
       },
+    );
+    return result.when(
+      _handleFailure,
+      (sessionId) => Either.right(sessionId),
     );
   }
 }
