@@ -32,7 +32,7 @@ class SignInController extends StateNotifier<SignInState> {
       state.password,
     );
     result.when(
-      (_) => state.copyWith(fetching: false),
+      (_) => state = state.copyWith(fetching: false),
       (_) => null,
     );
     return result;
