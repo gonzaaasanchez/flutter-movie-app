@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../../domain/either.dart';
 import '../../../domain/enums.dart';
 import '../../http/http.dart';
