@@ -29,19 +29,14 @@ class SubmitButton extends StatelessWidget {
   }
 
   Future<void> _submit(BuildContext context) async {
-    final SignInController contoller = context.read();
-    contoller.onFetchingChanged(true);
+    final SignInController controller = context.read();
 
-    final result = await context.read<AuthenticationRepository>().signIn(
-          contoller.state.username,
-          contoller.state.password,
-        );
-    if (!contoller.mounted) {
+    final result = await controller.submit();
+
+    if (!controller.mounted) {
       return;
     }
     result.when((failure) {
-      contoller.onFetchingChanged(false);
-
       final message = {
         SignInFailure.notFound: 'Not found',
         SignInFailure.unauthorized: 'Invalid password',

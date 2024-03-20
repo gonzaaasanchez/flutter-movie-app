@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/repositories/authentication_repository.dart';
 import '../controller/sign_in_controller.dart';
 import '../controller/sign_in_state.dart';
 import 'widgets/submit_button.dart';
@@ -13,6 +14,7 @@ class SignInView extends StatelessWidget {
     return ChangeNotifierProvider<SignInController>(
       create: (_) => SignInController(
         const SignInState(),
+        authenticationRepository: context.read(),
       ),
       child: Scaffold(
         body: SafeArea(
