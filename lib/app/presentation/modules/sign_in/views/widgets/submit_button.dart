@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../domain/enums.dart';
-import '../../../../../domain/repositories/authentication_repository.dart';
 import '../../../../routes/routes.dart';
 import '../../controller/sign_in_controller.dart';
 
