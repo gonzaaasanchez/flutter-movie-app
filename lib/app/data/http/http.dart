@@ -1,11 +1,17 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 import '../../domain/either.dart';
+
+part 'failure.dart';
+part 'parse_response_body.dart';
+part 'logs.dart';
+
+enum HttpMethod { get, post, put, patch, delete }
 
 class Http {
   Http({
@@ -22,7 +28,7 @@ class Http {
 
   Future<Either<HttpFailure, R>> request<R>(
     String path, {
-    required R Function(String responseBody) onSucess,
+    required R Function(dynamic responseBody) onSucess,
     HttpMethod method = HttpMethod.get,
     Map<String, String> headers = const {},
     Map<String, String> queryParams = const {},
@@ -91,15 +97,17 @@ class Http {
           );
           break;
       }
+      final responseBody = _parseResponseBody(response.body);
+      final statusCode = response.statusCode;
       logs = {
         ...logs,
         'startTime': DateTime.now().toString(),
-        'statusCode': response.statusCode,
-        'responseBody': response.body,
+        'statusCode': statusCode,
+        'responseBody': _parseResponseBody(response.body),
       };
-      if (response.statusCode >= 200 && response.statusCode < 300) {
+      if (statusCode >= 200 && statusCode < 300) {
         return Either.right(
-          onSucess(response.body),
+          onSucess(responseBody),
         );
       }
       return Either.left(
@@ -135,30 +143,7 @@ class Http {
         ...logs,
         'endTime': DateTime.now().toString(),
       };
-      if (kDebugMode) {
-        log(
-          '''
---------------------------------------
-${const JsonEncoder.withIndent(' ').convert(logs)},
---------------------------------------
-''',
-          stackTrace: stackTrace,
-        );
-      }
+      _printLogs(logs, stackTrace);
     }
   }
 }
-
-class HttpFailure {
-  HttpFailure({
-    this.statusCode,
-    this.exception,
-  });
-
-  final int? statusCode;
-  final Object? exception;
-}
-
-class NetworkException {}
-
-enum HttpMethod { get, post, put, patch, delete }

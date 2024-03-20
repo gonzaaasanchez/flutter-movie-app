@@ -33,9 +33,7 @@ class AuthenticationApi {
       '/authentication/token/new',
       needsAuthentication: true,
       onSucess: (responseBody) {
-        final json = Map<String, dynamic>.from(
-          jsonDecode(responseBody),
-        );
+        final json = responseBody as Map;
         return json['request_token'] as String;
       },
     );
@@ -60,9 +58,7 @@ class AuthenticationApi {
         'request_token': requestToken,
       },
       onSucess: (responseBody) {
-        final json = Map<String, dynamic>.from(
-          jsonDecode(responseBody),
-        );
+        final json = responseBody as Map;
         return json['request_token'] as String;
       },
     );
@@ -82,9 +78,7 @@ class AuthenticationApi {
         'request_token': requestToken,
       },
       onSucess: (responseBody) {
-        final json = Map<String, dynamic>.from(
-          jsonDecode(responseBody),
-        );
+        final json = responseBody as Map;
         return json['session_id'] as String;
       },
     );
