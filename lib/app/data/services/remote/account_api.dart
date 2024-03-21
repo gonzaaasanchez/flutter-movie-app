@@ -14,12 +14,7 @@ class AccountApi {
       queryParams: {
         'session_id': sessionId,
       },
-      onSucess: (json) {
-        return User(
-          id: json['id'],
-          username: json['username'],
-        );
-      },
+      onSucess: (json) => User.fromJson(json),
     );
     return result.when(
       (_) => null,
