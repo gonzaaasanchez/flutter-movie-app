@@ -1,32 +1,12 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SignInState extends Equatable {
-  const SignInState({
-    this.username = '',
-    this.password = '',
-    this.fetching = false,
-  });
+part 'sign_in_state.freezed.dart';
 
-  final String username, password;
-  final bool fetching;
-
-  SignInState copyWith({
-    String? username,
-    String? password,
-    bool? fetching,
-  }) {
-    return SignInState(
-      username: username ?? this.username,
-      password: password ?? this.password,
-      fetching: fetching ?? this.fetching,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        username,
-        password,
-        fetching,
-      ];
+@Freezed()
+class SignInState with _$SignInState {
+  const factory SignInState({
+    required String username,
+    required String password,
+    required bool fetching,
+  }) = _SignInState;
 }
- 
