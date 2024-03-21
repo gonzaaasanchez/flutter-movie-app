@@ -1,5 +1,5 @@
 import '../../../domain/either.dart';
-import '../../../domain/failures/sign_in_failures.dart';
+import '../../../domain/failures/sign_in_failure.dart';
 import '../../http/http.dart';
 
 class AuthenticationApi {
@@ -13,17 +13,17 @@ class AuthenticationApi {
     if (failure.statusCode != null) {
       switch (failure.statusCode) {
         case 401:
-          return Either.left(Unauthorized());
+          return Either.left(SignInFailure.unauthorized());
         case 404:
-          return Either.left(NotFound());
+          return Either.left(SignInFailure.notFound());
         default:
-          return Either.left(Unknown());
+          return Either.left(SignInFailure.unknown());
       }
     }
     if (failure.exception is NetworkException) {
-      return Either.left(Network());
+      return Either.left(SignInFailure.network());
     }
-    return Either.left(Unknown());
+    return Either.left(SignInFailure.unknown());
   }
 
   Future<Either<SignInFailure, String>> createRequestToken() async {
@@ -36,8 +36,8 @@ class AuthenticationApi {
       },
     );
     return result.when(
-      _handleFailure,
-      (requestToken) => Either.right(requestToken),
+      left: _handleFailure,
+      right: (requestToken) => Either.right(requestToken),
     );
   }
 
@@ -61,8 +61,8 @@ class AuthenticationApi {
       },
     );
     return result.when(
-      _handleFailure,
-      (newRequestToken) => Either.right(newRequestToken),
+      left: _handleFailure,
+      right: (newRequestToken) => Either.right(newRequestToken),
     );
   }
 
@@ -81,8 +81,8 @@ class AuthenticationApi {
       },
     );
     return result.when(
-      _handleFailure,
-      (sessionId) => Either.right(sessionId),
+      left: _handleFailure,
+      right: (sessionId) => Either.right(sessionId),
     );
   }
 }

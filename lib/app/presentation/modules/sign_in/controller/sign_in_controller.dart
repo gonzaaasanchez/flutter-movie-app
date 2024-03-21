@@ -1,5 +1,5 @@
 import '../../../../domain/either.dart';
-import '../../../../domain/failures/sign_in_failures.dart';
+import '../../../../domain/failures/sign_in_failure.dart';
 import '../../../../domain/models/user.dart';
 import '../../../../domain/repositories/authentication_repository.dart';
 import '../../../global/state_notifiers.dart';
@@ -32,8 +32,8 @@ class SignInController extends StateNotifier<SignInState> {
       state.password,
     );
     result.when(
-      (_) => state = state.copyWith(fetching: false),
-      (_) => null,
+      left: (_) => state = state.copyWith(fetching: false),
+      right: (_) => null,
     );
     return result;
   }

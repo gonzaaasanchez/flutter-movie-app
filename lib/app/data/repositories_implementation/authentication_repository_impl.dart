@@ -1,5 +1,5 @@
 import '../../domain/either.dart';
-import '../../domain/failures/sign_in_failures.dart';
+import '../../domain/failures/sign_in_failure.dart';
 import '../../domain/models/user.dart';
 import '../../domain/repositories/authentication_repository.dart';
 import '../services/local/session_service.dart';
@@ -34,8 +34,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   ) async {
     final requestTokenResult = await _authenticationApi.createRequestToken();
     return requestTokenResult.when(
-      (failure) => Either.left(failure),
-      (requestToken) async {
+      left: (failure) => Either.left(failure),
+      right: (requestToken) async {
         final loginResult = await _authenticationApi.createSessionWithLogin(
           username: username,
           password: password,
@@ -43,22 +43,22 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         );
 
         return loginResult.when(
-          (failure) async {
+          left: (failure) async {
             return Either.left(failure);
           },
-          (newRequestToken) async {
+          right: (newRequestToken) async {
             final sessionResult = await _authenticationApi.createSession(
               newRequestToken,
             );
             return sessionResult.when(
-              (failure) async {
+              left: (failure) async {
                 return Either.left(failure);
               },
-              (sessionId) async {
+              right: (sessionId) async {
                 _sessionService.saveSessionId(sessionId);
                 final user = await _accountApi.getAccount(sessionId);
                 if (user == null) {
-                  return Either.left(Unknown());
+                  return Either.left(SignInFailure.unknown());
                 }
                 return Either.right(user);
               },

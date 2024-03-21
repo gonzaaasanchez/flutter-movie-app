@@ -17,8 +17,8 @@ class AccountApi {
       onSucess: (json) => User.fromJson(json),
     );
     return result.when(
-      (_) => null,
-      (user) => user,
+      left: (_) => null,
+      right: (user) => user,
     );
   }
 }
