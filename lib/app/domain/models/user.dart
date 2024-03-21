@@ -14,8 +14,13 @@ class User with _$User {
     )
     String? avatar,
   }) = _User;
+  const User._();
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  String getCustomFunction() {
+    return '$username $id';
+  }
 }
 
 String? avatarPathFromJson(Map<String, dynamic> json) {
