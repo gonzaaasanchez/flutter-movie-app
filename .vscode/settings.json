@@ -3,5 +3,9 @@
         "source.fixAll": "always",
         "source.organizeImports": "always",
     },
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "command-runner.commands": {
+        "pub get": "flutter pub get",
+        "build_runner": "dart run build_runner build",
+    }
 }  
