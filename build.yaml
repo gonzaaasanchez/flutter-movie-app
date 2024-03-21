@@ -4,9 +4,11 @@ targets:
         json_serializable:
           generate_for:
             include:
-              - lib/app/domain/models/**/*
-              - lib/app/domain/models/*
+              - lib/app/domain/models/**/*  #to include subfolders
+              - lib/app/domain/models/*     #to include loose files
         freezed:
           generate_for:
             include:
               - lib/app/presentation/**/**_state.dart
+              - lib/app/domain/models/**/*
+              - lib/app/domain/models/*
