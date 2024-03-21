@@ -1,7 +1,7 @@
 part of 'http.dart';
 
 void _printLogs(
-  Map<String, dynamic> logs,
+  Json logs,
   StackTrace? stackTrace,
 ) {
   if (kDebugMode) {

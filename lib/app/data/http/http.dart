@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 import '../../domain/either.dart';
+import '../../domain/typedefs.dart';
 
 part 'failure.dart';
 part 'parse_response_body.dart';
@@ -30,12 +31,12 @@ class Http {
     String path, {
     required R Function(dynamic responseBody) onSucess,
     HttpMethod method = HttpMethod.get,
-    Map<String, String> headers = const {},
-    Map<String, String> queryParams = const {},
-    Map<String, dynamic> body = const {},
+    JsonString headers = const {},
+    JsonString queryParams = const {},
+    Json body = const {},
     bool needsAuthentication = true,
   }) async {
-    Map<String, dynamic> logs = {};
+    Json logs = {};
     StackTrace? stackTrace;
     try {
       if (needsAuthentication) {}
