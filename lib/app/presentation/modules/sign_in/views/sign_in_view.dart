@@ -12,11 +12,7 @@ class SignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignInController>(
       create: (_) => SignInController(
-        const SignInState(
-          username: '',
-          password: '',
-          fetching: false,
-        ),
+        const SignInState(),
         authenticationRepository: context.read(),
       ),
       child: Scaffold(
