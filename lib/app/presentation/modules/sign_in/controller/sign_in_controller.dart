@@ -1,5 +1,5 @@
 import '../../../../domain/either.dart';
-import '../../../../domain/enums.dart';
+import '../../../../domain/failures/sign_in_failures.dart';
 import '../../../../domain/models/user.dart';
 import '../../../../domain/repositories/authentication_repository.dart';
 import '../../../global/state_notifiers.dart';

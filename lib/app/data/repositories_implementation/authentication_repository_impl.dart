@@ -1,5 +1,5 @@
 import '../../domain/either.dart';
-import '../../domain/enums.dart';
+import '../../domain/failures/sign_in_failures.dart';
 import '../../domain/models/user.dart';
 import '../../domain/repositories/authentication_repository.dart';
 import '../services/local/session_service.dart';
@@ -58,7 +58,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
                 _sessionService.saveSessionId(sessionId);
                 final user = await _accountApi.getAccount(sessionId);
                 if (user == null) {
-                  return Either.left(SignInFailure.unknown);
+                  return Either.left(Unknown());
                 }
                 return Either.right(user);
               },
