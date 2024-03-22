@@ -16,7 +16,10 @@ class _HomeViewState extends State<HomeView> {
       body: SafeArea(
         child: Column(
           children: [
-            TrendingList(),
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: TrendingList(),
+            ),
           ],
         ),
       ),
