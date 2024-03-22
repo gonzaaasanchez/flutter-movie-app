@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import '../../../../domain/enums.dart';
 import '../../../../domain/repositories/trending_repository.dart';
 import '../../../../domain/typedefs.dart';
-import '../../../global/utils/get_image_url.dart';
+import 'trending_tile.dart';
+import 'trending_time_windows.dart';
 
 class TrendingList extends StatefulWidget {
   const TrendingList({super.key});
@@ -14,48 +15,74 @@ class TrendingList extends StatefulWidget {
 }
 
 class _TrendingListState extends State<TrendingList> {
-  late final Future<EitherListMedia> _future;
+  TrendingRepository get _repository => context.read();
+  late Future<EitherListMedia> _future;
+  TimeWindow _timeWindow = TimeWindow.day;
 
   @override
   void initState() {
-    final TrendingRepository repository = context.read();
-    _future = repository.getMoviesAndSeries(
-      TimeWindow.day,
-    );
+    _future = _repository.getMoviesAndSeries(_timeWindow);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
-      child: Center(
-        child: FutureBuilder<EitherListMedia>(
-          future: _future,
-          builder: (_, snapshot) {
-            if (!snapshot.hasData) {
-              return const CircularProgressIndicator();
-            }
-            return snapshot.data!.when(
-              left: (failure) => Text(
-                failure.toString(),
-              ),
-              right: (list) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: list.length,
-                  itemBuilder: (_, index) {
-                    final media = list[index];
-                    return Image.network(
-                      getImageUrl(media.posterPath),
-                    );
-                  },
-                );
-              },
-            );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TrendingTimeWindows(
+          timeWindow: _timeWindow,
+          onChanged: (timeWindow) {
+            setState(() {
+              _timeWindow = timeWindow;
+              _future = _repository.getMoviesAndSeries(
+                _timeWindow,
+              );
+            });
           },
         ),
-      ),
+        AspectRatio(
+          aspectRatio: 16 / 8,
+          child: LayoutBuilder(
+            builder: (_, constraints) {
+              final width = constraints.maxHeight * 0.65;
+              return Center(
+                child: FutureBuilder<EitherListMedia>(
+                  key: ValueKey(_future), // this forces the render (to show the loader)
+                  future: _future,
+                  builder: (_, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const CircularProgressIndicator();
+                    }
+                    return snapshot.data!.when(
+                      left: (failure) => Text(
+                        failure.toString(),
+                      ),
+                      right: (list) {
+                        return ListView.separated(
+                          separatorBuilder: (_, __) => const SizedBox(width: 10),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: list.length,
+                          itemBuilder: (_, index) {
+                            final media = list[index];
+                            return TrendingTile(
+                              media: media,
+                              width: width,
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

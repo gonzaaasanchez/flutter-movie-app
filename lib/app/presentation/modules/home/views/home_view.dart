@@ -15,7 +15,6 @@ class _HomeViewState extends State<HomeView> {
     return const Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TrendingList(),
           ],
