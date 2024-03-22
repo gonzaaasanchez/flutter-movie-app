@@ -9,14 +9,29 @@ part 'media.g.dart';
 class Media with _$Media {
   factory Media({
     required int id,
-    required String title,
     required String overview,
+    @JsonKey(
+      readValue: readTitleValue,
+    )
+    required String title,
+    @JsonKey(
+      name: 'original_title',
+      readValue: readOriginalTitleValue,
+    )
+    required String originalTitle,
     @JsonKey(name: 'poster_path') required String posterPath,
-    @JsonKey(name: 'original_title') required String originalTitle,
     @JsonKey(name: 'backdrop_path') required String backdropPath,
     @JsonKey(name: 'vote_average') required double voteAverage,
-    @JsonKey(name: 'medi_type') required String type,
+    @JsonKey(name: 'media_type') required String type,
   }) = _Media;
 
   factory Media.fromJson(Json json) => _$MediaFromJson(json);
+}
+
+Object? readTitleValue(Map map, String _) {
+  return map['title'] ?? map['name'];
+}
+
+Object? readOriginalTitleValue(Map map, String _) {
+  return map['original_title'] ?? map['original_name'];
 }
