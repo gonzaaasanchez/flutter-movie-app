@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/enums.dart';
-import '../../../../domain/repositories/trending_repository.dart';
-import '../../../../domain/typedefs.dart';
+import '../../../../../domain/enums.dart';
+import '../../../../../domain/repositories/trending_repository.dart';
+import '../../../../../domain/typedefs.dart';
 import 'trending_tile.dart';
 import 'trending_time_windows.dart';
 
@@ -21,8 +21,8 @@ class _TrendingListState extends State<TrendingList> {
 
   @override
   void initState() {
-    _future = _repository.getMoviesAndSeries(_timeWindow);
     super.initState();
+    _future = _repository.getMoviesAndSeries(_timeWindow);
   }
 
   @override

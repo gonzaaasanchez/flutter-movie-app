@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/trending_list.dart';
+import 'widgets/trending_list.dart';
+import 'widgets/trending_performers.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -16,10 +17,10 @@ class _HomeViewState extends State<HomeView> {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: TrendingList(),
-            ),
+            SizedBox(height: 10),
+            TrendingList(),
+            SizedBox(height: 20),
+            TrendingPerformers(),
           ],
         ),
       ),

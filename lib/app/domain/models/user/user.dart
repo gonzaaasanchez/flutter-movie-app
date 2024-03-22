@@ -10,6 +10,8 @@ class User with _$User {
   const factory User({
     required int id,
     required String username,
+
+    ///
     @JsonKey(
       name: 'avatar',
       fromJson: avatarPathFromJson,

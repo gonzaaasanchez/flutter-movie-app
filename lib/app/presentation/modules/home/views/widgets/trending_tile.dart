@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/models/media/media.dart';
-import '../../../global/utils/get_image_url.dart';
+import '../../../../../domain/models/media/media.dart';
+import '../../../../global/utils/get_image_url.dart';
 
 class TrendingTile extends StatelessWidget {
   const TrendingTile({
@@ -39,7 +39,7 @@ class TrendingTile extends StatelessWidget {
                       label: Text(
                         media.voteAverage.toStringAsFixed(1),
                       ),
-                      
+
                     ),
                     const SizedBox(width: 5),
                     Chip(
