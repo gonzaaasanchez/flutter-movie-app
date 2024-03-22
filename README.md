@@ -3,6 +3,16 @@
 
 ## Getting Started
 
+TO DO:
+Explain usage and create an example project:
+- Used extensions
+- Used packages
+- Models creations (freezed / serializable)
+- Architecture explanation
+- .vscode/settings.json
+- analysis_options.yaml
+- build.yaml
+
 Config:
 Command Runner
 https://marketplace.visualstudio.com/items?itemName=edonet.vscode-command-runner

@@ -14,4 +14,4 @@ targets:
               - lib/app/domain/models/*
               - lib/app/domain/failures/**/*
               - lib/app/domain/failures/*
-              - lib/app/domain/either.dart
+              - lib/app/domain/either/either.dart

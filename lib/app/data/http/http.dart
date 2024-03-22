@@ -5,12 +5,12 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
-import '../../domain/either.dart';
+import '../../domain/either/either.dart';
 import '../../domain/typedefs.dart';
 
 part 'failure.dart';
-part 'parse_response_body.dart';
 part 'logs.dart';
+part 'parse_response_body.dart';
 
 enum HttpMethod { get, post, put, patch, delete }
 
@@ -114,6 +114,7 @@ class Http {
       return Either.left(
         HttpFailure(
           statusCode: response.statusCode,
+          data: responseBody,
         ),
       );
     } catch (e, s) {
