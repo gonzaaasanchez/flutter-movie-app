@@ -37,7 +37,7 @@ class TrendingApi {
         final list = List<Json>.from(json['results']);
         return list
             .where(
-              (element) => element['known_for_department'] == 'Acting' && element['profile_path'] == null,
+              (element) => element['known_for_department'] == 'Acting' && element['profile_path'] != null,
             )
             .map(
               (e) => Performer.fromJson(e),
