@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../global/widgets/request_failed.dart';
 import '../../../controller/home_controller.dart';
+import '../../../state/home_state.dart';
 import 'performer_tile.dart';
 
 class TrendingPerformers extends StatefulWidget {
@@ -31,7 +32,9 @@ class _TrendingPerformersState extends State<TrendingPerformers> {
           child: CircularProgressIndicator(),
         ),
         failed: () => RequestFailed(
-          onRetry: () {},
+          onRetry: () => controller.loadPerformers(
+            performers: const PerformersState.loading(),
+          ),
         ),
         loaded: (list) => Stack(
           alignment: Alignment.bottomCenter,

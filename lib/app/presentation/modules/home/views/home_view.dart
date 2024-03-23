@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/enums.dart';
 import '../controller/home_controller.dart';
 import '../state/home_state.dart';
 import 'widgets/movies/trending_list.dart';

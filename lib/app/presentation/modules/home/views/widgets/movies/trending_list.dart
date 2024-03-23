@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../global/widgets/request_failed.dart';
 import '../../../controller/home_controller.dart';
+import '../../../state/home_state.dart';
 import 'trending_tile.dart';
 import 'trending_time_windows.dart';
 
@@ -18,7 +19,7 @@ class TrendingList extends StatelessWidget {
       children: [
         TrendingTimeWindows(
           timeWindow: moviesAndSeries.timeWindow,
-          onChanged: (timeWindow) {},
+          onChanged: controller.onTimeWindowChanged,
         ),
         AspectRatio(
           aspectRatio: 16 / 8,
@@ -29,7 +30,11 @@ class TrendingList extends StatelessWidget {
                 child: moviesAndSeries.when(
                   loading: (_) => const CircularProgressIndicator(),
                   failed: (_) => RequestFailed(
-                    onRetry: () {},
+                    onRetry: () => controller.loadMoviesAndSeries(
+                      moviesAndSeries: MoviesAndSeriesState.loading(
+                        moviesAndSeries.timeWindow,
+                      ),
+                    ),
                   ),
                   loaded: (_, list) => ListView.separated(
                     separatorBuilder: (_, __) => const SizedBox(width: 10),
