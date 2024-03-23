@@ -22,15 +22,15 @@ class SignInView extends StatelessWidget {
             child: Form(
               child: Builder(
                 builder: (context) {
-                  final contoller = Provider.of<SignInController>(context);
+                  final SignInController controller = context.watch();
                   return AbsorbPointer(
-                    absorbing: contoller.state.fetching,
+                    absorbing: controller.state.fetching,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onChanged: (value) => contoller.onUsernameChanged(value),
+                          onChanged: (value) => controller.onUsernameChanged(value),
                           decoration: const InputDecoration(hintText: 'Username'),
                           validator: (value) {
                             value = value?.toLowerCase().trim() ?? '';
@@ -43,7 +43,7 @@ class SignInView extends StatelessWidget {
                         const SizedBox(height: 20),
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onChanged: (value) => contoller.onPasswordChanged(value),
+                          onChanged: (value) => controller.onPasswordChanged(value),
                           decoration: const InputDecoration(
                             hintText: 'Password',
                           ),

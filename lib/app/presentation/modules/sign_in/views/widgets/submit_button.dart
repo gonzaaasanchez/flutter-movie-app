@@ -10,7 +10,7 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SignInController controller = Provider.of(context);
+    final SignInController controller = context.watch();
     if (controller.state.fetching) {
       return const CircularProgressIndicator();
     } else {
