@@ -9,6 +9,7 @@ class AccountApi {
   final Http _http;
 
   Future<User?> getAccount(String sessionId) async {
+    // TODO where to get account id?
     final result = await _http.request(
       '/account/21096536',
       queryParams: {
