@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../domain/repositories/trending_repository.dart';
 import '../../../../../../domain/typedefs.dart';
+import '../../../../../global/widgets/request_failed.dart';
 import 'performer_tile.dart';
 
 class TrendingPerformers extends StatefulWidget {
@@ -38,6 +39,7 @@ class _TrendingPerformersState extends State<TrendingPerformers> {
   Widget build(BuildContext context) {
     return Expanded(
       child: FutureBuilder<EitherListPerformer>(
+        key: ValueKey(_future),
         future: _future,
         builder: (_, snapshot) {
           if (!snapshot.hasData) {
@@ -46,7 +48,13 @@ class _TrendingPerformersState extends State<TrendingPerformers> {
             );
           }
           return snapshot.data!.when(
-            left: (_) => const Text('Error'),
+            left: (_) => RequestFailed(
+              onRetry: () {
+                setState(() {
+                  _future = context.read<TrendingRepository>().getPerformers();
+                });
+              },
+            ),
             right: (list) {
               return Stack(
                 alignment: Alignment.bottomCenter,

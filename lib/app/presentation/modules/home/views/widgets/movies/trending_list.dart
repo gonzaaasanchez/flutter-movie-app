@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../domain/enums.dart';
 import '../../../../../../domain/repositories/trending_repository.dart';
 import '../../../../../../domain/typedefs.dart';
+import '../../../../../global/widgets/request_failed.dart';
 import 'trending_tile.dart';
 import 'trending_time_windows.dart';
 
@@ -25,6 +26,15 @@ class _TrendingListState extends State<TrendingList> {
     _future = _repository.getMoviesAndSeries(_timeWindow);
   }
 
+  void _updateFuture(TimeWindow timeWindow) {
+    setState(() {
+      _timeWindow = timeWindow;
+      _future = _repository.getMoviesAndSeries(
+        _timeWindow,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,14 +42,7 @@ class _TrendingListState extends State<TrendingList> {
       children: [
         TrendingTimeWindows(
           timeWindow: _timeWindow,
-          onChanged: (timeWindow) {
-            setState(() {
-              _timeWindow = timeWindow;
-              _future = _repository.getMoviesAndSeries(
-                _timeWindow,
-              );
-            });
-          },
+          onChanged: _updateFuture,
         ),
         AspectRatio(
           aspectRatio: 16 / 8,
@@ -55,8 +58,8 @@ class _TrendingListState extends State<TrendingList> {
                       return const CircularProgressIndicator();
                     }
                     return snapshot.data!.when(
-                      left: (failure) => Text(
-                        failure.toString(),
+                      left: (failure) => RequestFailed(
+                        onRetry: () => _updateFuture(_timeWindow),
                       ),
                       right: (list) {
                         return ListView.separated(
