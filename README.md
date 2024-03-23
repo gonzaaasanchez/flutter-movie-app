@@ -21,4 +21,5 @@ Run
 ```
 flutter pub get
 dart run build_runner build
+dart run flutter_gen:flutter_gen_command
 ```

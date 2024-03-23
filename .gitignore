@@ -42,6 +42,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Generated code with json_serializable and freezed
+# Generated code with json_serializable, freezed & flutter_gen_runner
 *.g.dart
 *.freezed.dart
+lib/app/generated/
