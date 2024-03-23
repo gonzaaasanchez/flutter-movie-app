@@ -12,12 +12,12 @@ class TrendingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = context.watch();
-    final state = controller.state;
+    final moviesAndSeries = controller.state.moviesAndSeries;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TrendingTimeWindows(
-          timeWindow: state.timeWindow,
+          timeWindow: moviesAndSeries.timeWindow,
           onChanged: (timeWindow) {},
         ),
         AspectRatio(
@@ -26,30 +26,26 @@ class TrendingList extends StatelessWidget {
             builder: (_, constraints) {
               final width = constraints.maxHeight * 0.65;
               return Center(
-                child: Builder(
-                  builder: (_) {
-                    if (state.loading) {
-                      const CircularProgressIndicator();
-                    }
-                    if (state.moviesAndSeries == null) {
-                      RequestFailed(onRetry: () {});
-                    }
-                    return ListView.separated(
-                      separatorBuilder: (_, __) => const SizedBox(width: 10),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: state.moviesAndSeries!.length,
-                      itemBuilder: (_, index) {
-                        final media = state.moviesAndSeries![index];
-                        return TrendingTile(
-                          media: media,
-                          width: width,
-                        );
-                      },
-                    );
-                  },
+                child: moviesAndSeries.when(
+                  loading: (_) => const CircularProgressIndicator(),
+                  failed: (_) => RequestFailed(
+                    onRetry: () {},
+                  ),
+                  loaded: (_, list) => ListView.separated(
+                    separatorBuilder: (_, __) => const SizedBox(width: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: list.length,
+                    itemBuilder: (_, index) {
+                      final media = list[index];
+                      return TrendingTile(
+                        media: media,
+                        width: width,
+                      );
+                    },
+                  ),
                 ),
               );
             },
