@@ -28,9 +28,7 @@ class MovieView extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
-            actions: controller.state.map(
-              loading: (value) => null,
-              failed: (value) => null,
+            actions: controller.state.mapOrNull(
               loaded: (_) => [
                 IconButton(
                   onPressed: () {},
