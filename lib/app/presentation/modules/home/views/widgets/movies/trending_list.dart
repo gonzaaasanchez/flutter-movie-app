@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../global/widgets/request_failed.dart';
 import '../../../controller/home_controller.dart';
-import '../../../state/home_state.dart';
+import '../../../controller/state/home_state.dart';
 import 'trending_tile.dart';
 import 'trending_time_windows.dart';
 

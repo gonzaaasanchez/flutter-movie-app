@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../domain/enums.dart';
-import '../../../../domain/models/media/media.dart';
-import '../../../../domain/models/performer/performer.dart';
+import '../../../../../domain/enums.dart';
+import '../../../../../domain/models/media/media.dart';
+import '../../../../../domain/models/performer/performer.dart';
 
 part 'home_state.freezed.dart';
 
@@ -41,4 +41,12 @@ class PerformersState with _$PerformersState {
   const factory PerformersState.loaded(
     List<Performer> list,
   ) = PerformersStateLoaded;
+}
+
+@freezed
+class Gonza with _$Gonza {
+
+  factory Gonza(
+    String name
+  ) = _Gonza;
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/home_controller.dart';
-import '../state/home_state.dart';
+import '../controller/state/home_state.dart';
 import 'widgets/movies/trending_list.dart';
 import 'widgets/performers/trending_performers.dart';
 
@@ -17,14 +17,10 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeController>(
-      create: (context) {
-        final controller = HomeController(
-          HomeState(),
-          trendingRepository: context.read(),
-        );
-        controller.init();
-        return controller;
-      },
+      create: (context) => HomeController(
+        HomeState(),
+        trendingRepository: context.read(),
+      )..init(), // TODO  Use cascade notation
       child: Scaffold(
         body: SafeArea(
           child: LayoutBuilder(

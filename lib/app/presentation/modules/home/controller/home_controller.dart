@@ -1,7 +1,7 @@
 import '../../../../domain/enums.dart';
 import '../../../../domain/repositories/trending_repository.dart';
 import '../../../global/state_notifiers.dart';
-import '../state/home_state.dart';
+import 'state/home_state.dart';
 
 class HomeController extends StateNotifier<HomeState> {
   HomeController(
@@ -63,18 +63,14 @@ class HomeController extends StateNotifier<HomeState> {
         performers: performers,
       );
     }
-    final performersResult = await trendingRepository.getPerformers();
-    performersResult.when(
-      left: (_) {
-        state = state.copyWith(
-          performers: const PerformersState.failed(),
-        );
-      },
-      right: (list) {
-        state = state.copyWith(
-          performers: PerformersState.loaded(list),
-        );
-      },
+    final result = await trendingRepository.getPerformers();
+    state = result.when(
+      left: (_) => state.copyWith(
+        performers: const PerformersState.failed(),
+      ),
+      right: (list) => state.copyWith(
+        performers: PerformersState.loaded(list),
+      ),
     );
   }
 }
