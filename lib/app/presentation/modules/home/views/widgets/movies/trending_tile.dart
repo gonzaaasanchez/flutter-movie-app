@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../domain/models/media/media.dart';
 import '../../../../../global/utils/get_image_url.dart';
-import '../../../../../routes/routes.dart';
+import '../../../../movie/views/movie_view.dart';
 
 class TrendingTile extends StatelessWidget {
   const TrendingTile({
@@ -21,10 +21,13 @@ class TrendingTile extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (media.type == MediaType.movie) {
-          Navigator.pushNamed(
+          Navigator.push(
             context,
-            Routes.movie,
-            arguments: media.id,
+            MaterialPageRoute(
+              builder: (_) => MovieView(
+                movieId: media.id,
+              ),
+            ),
           );
         }
       },
