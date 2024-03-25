@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../global/utils/get_image_url.dart';
 import '../../controller/state/movie_state.dart';
+import 'movie_header.dart';
 
 class MovieContent extends StatelessWidget {
   const MovieContent({
@@ -17,18 +18,13 @@ class MovieContent extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          AspectRatio(
-            aspectRatio: 16/13,
-            child: ExtendedImage.network(
-              getImageUrl(
-                movie.backdropPath,
-                imageQuality: ImageQuality.original
-              ),
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
+          MovieHeader(movie: movie),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Text(
+              movie.overview,
             ),
-          )
+          ),
         ],
       ),
     );

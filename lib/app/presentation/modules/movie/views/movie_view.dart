@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../global/widgets/request_failed.dart';
 import '../controller/movie_controller.dart';
 import '../controller/state/movie_state.dart';
+import 'widgets/movie_app_bar.dart';
 import 'widgets/movie_content.dart';
 
 class MovieView extends StatelessWidget {
@@ -25,21 +26,7 @@ class MovieView extends StatelessWidget {
         final MovieController controller = context.watch();
         return Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            foregroundColor: Colors.white,
-            actions: controller.state.mapOrNull(
-              loaded: (_) => [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite_outline_outlined,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
+          appBar: const MovieAppBar(),
           /// TODO
           ///  .when: returns properties of the classes
           ///  .map: returns instance of the classes
@@ -60,4 +47,5 @@ class MovieView extends StatelessWidget {
       },
     );
   }
+
 }
