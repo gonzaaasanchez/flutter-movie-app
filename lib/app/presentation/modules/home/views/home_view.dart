@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../routes/routes.dart';
 import '../controller/home_controller.dart';
 import '../controller/state/home_state.dart';
 import 'widgets/movies/trending_list.dart';
@@ -22,6 +23,29 @@ class _HomeViewState extends State<HomeView> {
         trendingRepository: context.read(),
       )..init(), // TODO  Use cascade notation
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 1,
+          actions: [
+            IconButton(
+              onPressed: () => Navigator.pushNamed(
+                context,
+                Routes.favorites,
+              ),
+              icon: const Icon(
+                Icons.favorite,
+                color: Colors.black,
+              ),
+            ),
+            IconButton(
+              onPressed: () => {},
+              icon: const Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) => RefreshIndicator(

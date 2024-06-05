@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const _sessionIdKey = 'sessionId';
+const _accountIdKey = 'accountId';
 
 class SessionService {
   SessionService(this._secureStorage);
@@ -8,8 +9,11 @@ class SessionService {
   final FlutterSecureStorage _secureStorage;
 
   Future<String?> get sessionId async {
-    final sessionID = await _secureStorage.read(key: _sessionIdKey);
-    return sessionID;
+    return _secureStorage.read(key: _sessionIdKey);
+  }
+
+  Future<String?> get accountId {
+    return _secureStorage.read(key: _accountIdKey);
   }
 
   Future<void> saveSessionId(String sessionId) {
@@ -19,7 +23,14 @@ class SessionService {
     );
   }
 
-  Future<void> signOut() {
-    return _secureStorage.delete(key: _sessionIdKey);
+  Future<void> saveAccountId(String accountId) {
+    return _secureStorage.write(
+      key: _accountIdKey,
+      value: accountId,
+    );
+  }
+
+  Future<void> signOut() async {
+    return _secureStorage.deleteAll();
   }
 }

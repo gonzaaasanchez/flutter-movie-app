@@ -12,6 +12,7 @@ class MovieController extends StateNotifier<MovieState> {
   final int movieId;
 
   Future<void> init() async {
+    state = const MovieState.loading();
     final result = await moviesRepository.getMovieById(movieId);
     state = result.when(
       left: (_) => const MovieState.failed(),

@@ -22,6 +22,8 @@ import 'app/domain/repositories/authentication_repository.dart';
 import 'app/domain/repositories/connectivity_repository.dart';
 import 'app/domain/repositories/movies_repository.dart';
 import 'app/domain/repositories/trending_repository.dart';
+import 'app/presentation/global/controller/favorites/favorites_controller.dart';
+import 'app/presentation/global/controller/favorites/state/favorites_state.dart';
 import 'app/presentation/global/controller/session_controller.dart';
 
 void main() {
@@ -36,6 +38,7 @@ void main() {
   );
   final accountApi = AccountApi(
     http,
+    sessionService,
   );
   runApp(
     MultiProvider(
@@ -70,9 +73,15 @@ void main() {
             MoviesApi(http),
           ),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<SessionController>(
           create: (context) => SessionController(
             authenticationRepository: context.read(),
+          ),
+        ),
+        ChangeNotifierProvider<FavoritesController>(
+          create: (context) => FavoritesController(
+            FavoritesState.loading(),
+            accountRepository: context.read(),
           ),
         ),
       ],

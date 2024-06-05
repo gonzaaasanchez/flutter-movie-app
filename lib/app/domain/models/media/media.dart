@@ -12,6 +12,17 @@ enum MediaType {
   tv,
 }
 
+extension MediaTypeExtension on MediaType {
+  String get path {
+    switch (this) {
+      case MediaType.movie:
+        return 'movies';
+      case MediaType.tv:
+        return 'tv';
+    }
+  }
+}
+
 @freezed
 class Media with _$Media {
   factory Media({
@@ -29,7 +40,7 @@ class Media with _$Media {
     )
     required String originalTitle,
     @JsonKey(name: 'poster_path') required String posterPath,
-    @JsonKey(name: 'backdrop_path') required String backdropPath,
+    @JsonKey(name: 'backdrop_path') required String? backdropPath,
     @JsonKey(name: 'vote_average') required double voteAverage,
     @JsonKey(name: 'media_type') required MediaType type,
   }) = _Media;
