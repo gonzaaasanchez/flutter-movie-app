@@ -42,11 +42,3 @@ class PerformersState with _$PerformersState {
     List<Performer> list,
   ) = PerformersStateLoaded;
 }
-
-@freezed
-class Gonza with _$Gonza {
-
-  factory Gonza(
-    String name
-  ) = _Gonza;
-}

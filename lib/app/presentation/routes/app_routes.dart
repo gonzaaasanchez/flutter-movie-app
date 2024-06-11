@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../modules/favorites/views/favorites_views.dart';
+import '../modules/favorites/views/favorites_view.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/offline/views/offline_view.dart';
 import '../modules/sign_in/views/sign_in_view.dart';
