@@ -9,7 +9,7 @@ Either<HttpRequestFailure, R> handleHttpFailure<R>(
     final statusCode = httpFailure.statusCode;
     switch (statusCode) {
       case 404:
-        return HttpRequestFailure.notFoud();
+        return HttpRequestFailure.notFound();
       case 401:
         return HttpRequestFailure.unauthorized();
     }

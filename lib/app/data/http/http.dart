@@ -35,6 +35,7 @@ class Http {
     JsonString queryParams = const {},
     Json body = const {},
     bool needsAuthentication = true,
+    Duration timeout = const Duration(seconds: 60),
   }) async {
     Json logs = {};
     StackTrace? stackTrace;
@@ -67,35 +68,35 @@ class Http {
           response = await _client.get(
             url,
             headers: headers,
-          );
+          ).timeout(timeout);
           break;
         case HttpMethod.post:
           response = await _client.post(
             url,
             headers: headers,
             body: bodyString,
-          );
+          ).timeout(timeout);
           break;
         case HttpMethod.put:
           response = await _client.put(
             url,
             headers: headers,
             body: bodyString,
-          );
+          ).timeout(timeout);
           break;
         case HttpMethod.patch:
           response = await _client.patch(
             url,
             headers: headers,
             body: bodyString,
-          );
+          ).timeout(timeout);
           break;
         case HttpMethod.delete:
           response = await _client.delete(
             url,
             headers: headers,
             body: bodyString,
-          );
+          ).timeout(timeout);
           break;
       }
       final responseBody = _parseResponseBody(response.body);

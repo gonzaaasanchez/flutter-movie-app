@@ -41,6 +41,19 @@ class Movie with _$Movie {
     )
     required String originalTitle,
   }) = _Movie;
+  const Movie._();
 
   factory Movie.fromJson(Json json) => _$MovieFromJson(json);
+  Media toMedia() {
+    return Media(
+      id: id,
+      overview: overview,
+      title: title,
+      originalTitle: originalTitle,
+      posterPath: posterPath,
+      backdropPath: backdropPath,
+      voteAverage: voteAverage,
+      type: MediaType.movie,
+    );
+  }
 }

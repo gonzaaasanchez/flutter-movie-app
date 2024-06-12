@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../global/controller/favorites/favorites_controller.dart';
-import '../../../../global/controller/session_controller.dart';
 import '../../../../routes/routes.dart';
 import '../../controller/sign_in_controller.dart';
 

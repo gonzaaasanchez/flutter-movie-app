@@ -1,3 +1,5 @@
+import '../../../../domain/either/either.dart';
+import '../../../../domain/failures/http_request/http_request_failure.dart';
 import '../../../../domain/models/media/media.dart';
 import '../../../../domain/repositories/account_repository.dart';
 import '../../state_notifiers.dart';
@@ -31,5 +33,45 @@ class FavoritesController extends StateNotifier<FavoritesState> {
         );
       },
     );
+  }
+
+  Future<Either<HttpRequestFailure, void>> setFavorite(Media media) async {
+    assert(state is FavoritesStateLoaded);
+    final loadedState = state as FavoritesStateLoaded;
+    final isMovie = media.type == MediaType.movie;
+    // final map = Map<int, Media>.from(
+    //   media.type == MediaType.movie ? loadedState.movies : loadedState.series,
+    // );
+    // Other approach:
+    final map = isMovie
+        ? {
+            ...loadedState.movies,
+          }
+        : {
+            ...loadedState.series,
+          };
+    final favorite = !map.keys.contains(media.id);
+    final result = await accountRepository.setFavorite(
+      mediaID: media.id,
+      mediaType: media.type,
+      favorite: favorite,
+    );
+    result.whenOrNull(
+      right: (_) {
+        if (favorite) {
+          map[media.id] = media;
+        } else {
+          map.remove(media.id);
+        }
+        state = isMovie
+            ? loadedState.copyWith(
+                movies: map,
+              )
+            : loadedState.copyWith(
+                series: map,
+              );
+      },
+    );
+    return result;
   }
 }
