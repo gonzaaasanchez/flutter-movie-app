@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../global/controller/favorites/favorites_controller.dart';
+import '../global/dialogs/show_loader.dart';
 
 Future<void> setFavorite({
   required BuildContext context,
@@ -9,7 +10,10 @@ Future<void> setFavorite({
   required bool Function() mounted,
 }) async {
   final FavoritesController favoritesController = context.read();
-  final result = await favoritesController.setFavorite(media);
+  final result = await showLoder(
+    context,
+    favoritesController.setFavorite(media),
+  );
   if (!mounted()) {
     return;
   }
