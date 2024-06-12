@@ -31,7 +31,7 @@ class Movie with _$Movie {
     @JsonKey(
       name: 'backdrop_path',
     )
-    required String backdropPath,
+    required String? backdropPath,
     @JsonKey(
       readValue: readTitleValue,
     )
