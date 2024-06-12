@@ -9,5 +9,6 @@
     "build_runner": "dart run build_runner build",
     "build_runner delete conflictings": "dart run build_runner build --delete-conflicting-outputs",
     "flutter_gen": "dart run flutter_gen:flutter_gen_command"
-  }
+  },
+  "dart.flutterSdkPath": "~/SDKs/flutter"
 }

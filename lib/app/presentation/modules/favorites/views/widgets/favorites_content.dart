@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../global/controller/favorites/state/favorites_state.dart';
+import '../../../../global/controllers/favorites/state/favorites_state.dart';
 import 'favorites_list.dart';
 
 class FavoritesContent extends StatelessWidget {

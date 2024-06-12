@@ -11,7 +11,6 @@ class FavoritesAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      elevation: 0,
       title: const Text('Favorites'),
       bottom: TabBar(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -27,7 +26,6 @@ class FavoritesAppBar extends StatelessWidget implements PreferredSizeWidget {
           width: 20,
         ),
         indicatorSize: TabBarIndicatorSize.label,
-        labelColor: Colors.black,
         tabs: const [
           Tab(
             text: 'Movies',

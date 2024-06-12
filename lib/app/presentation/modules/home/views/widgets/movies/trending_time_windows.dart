@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../domain/enums.dart';
+import '../../../../../global/colors.dart';
+import '../../../../../global/extensions/build_context_extension.dart';
 
 class TrendingTimeWindows extends StatelessWidget {
   const TrendingTimeWindows({
@@ -18,16 +20,18 @@ class TrendingTimeWindows extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
+          Text(
             'Trending',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: context.textTheme.titleSmall,
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Material(
-              color: const Color(0xfff0f0f0),
+              color: context.darkMode
+                  ? AppColors.dark
+                  : const Color(
+                      0xfff0f0f0,
+                    ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButton<TimeWindow>(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../global/controller/favorites/favorites_controller.dart';
+import '../../../global/controllers/favorites/favorites_controller.dart';
 import '../../../global/widgets/request_failed.dart';
 import 'widgets/favorites_app_bar.dart';
 import 'widgets/favorites_content.dart';

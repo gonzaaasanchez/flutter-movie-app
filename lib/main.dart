@@ -22,9 +22,10 @@ import 'app/domain/repositories/authentication_repository.dart';
 import 'app/domain/repositories/connectivity_repository.dart';
 import 'app/domain/repositories/movies_repository.dart';
 import 'app/domain/repositories/trending_repository.dart';
-import 'app/presentation/global/controller/favorites/favorites_controller.dart';
-import 'app/presentation/global/controller/favorites/state/favorites_state.dart';
-import 'app/presentation/global/controller/session_controller.dart';
+import 'app/presentation/global/controllers/favorites/favorites_controller.dart';
+import 'app/presentation/global/controllers/favorites/state/favorites_state.dart';
+import 'app/presentation/global/controllers/session_controller.dart';
+import 'app/presentation/global/controllers/theme_controller.dart';
 
 void main() {
   final sessionService = SessionService(
@@ -82,6 +83,11 @@ void main() {
           create: (context) => FavoritesController(
             FavoritesState.loading(),
             accountRepository: context.read(),
+          ),
+        ),
+        ChangeNotifierProvider<ThemeController>(
+          create: (context) => ThemeController(
+            false,
           ),
         ),
       ],

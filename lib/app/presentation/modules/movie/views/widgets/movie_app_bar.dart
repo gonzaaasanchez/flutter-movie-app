@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../global/controller/favorites/favorites_controller.dart';
+import '../../../../global/controllers/favorites/favorites_controller.dart';
 import '../../../../utils/set_favorite.dart';
 import '../../controller/movie_controller.dart';
 
@@ -14,7 +14,9 @@ class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
     final FavoritesController favoritesController = context.watch();
     return AppBar(
       backgroundColor: Colors.transparent,
-      foregroundColor: Colors.white,
+      iconTheme: const IconThemeData(
+        color: Colors.white,
+      ),
       actions: controller.state.mapOrNull(
         loaded: (movieState) => [
           favoritesController.state.maybeMap(
