@@ -16,9 +16,9 @@ class FavoritesAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         dividerColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
-        overlayColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+        overlayColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
           // Use the default focused overlay color
-          return states.contains(MaterialState.focused) ? null : Colors.transparent;
+          return states.contains(WidgetState.focused) ? null : Colors.transparent;
         }),
         controller: tabController,
         indicator: const _Decoration(

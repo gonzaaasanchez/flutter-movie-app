@@ -65,8 +65,8 @@ class MovieHeader extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
 
-                      /// TODO
-                      ///  Row != Wrap -> no overflow errors
+                      // TODO
+                      //  Row != Wrap -> no overflow errors
                       Wrap(
                         spacing: 10,
                         children: movie.genres
