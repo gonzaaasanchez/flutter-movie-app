@@ -20,6 +20,10 @@ class _ProfileViewState extends State<ProfileView> {
         child: SizedBox.expand(
           child: Column(
             children: [
+              // TODO ADD functionality
+              /// Switch: 'Use system configuration'
+              /// which disables the user prefence when on
+              /// and uses user prefence when off
               SwitchListTile(
                 title: const Text('Dark Mode'),
                 value: context.darkMode,

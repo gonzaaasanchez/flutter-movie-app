@@ -36,6 +36,8 @@ Future<void> main() async {
   final sessionService = SessionService(
     const FlutterSecureStorage(),
   );
+  //TODO add env files
+  // https://codewithandrea.com/articles/flutter-api-keys-dart-define-env-files/
   final http = Http(
     client: Client(),
     baseUrl: 'https://api.themoviedb.org/3',
