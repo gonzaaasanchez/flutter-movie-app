@@ -14,8 +14,10 @@ class ConnectivityRepositoryImpl implements ConnectivityRepository {
 
   @override
   Future<bool> get hasInternet async {
-    final result = await _connectivity.checkConnectivity();
-    if (result == ConnectivityResult.none) {
+    // TODO migrate
+    // use onConnectivityChanged as the documentation says
+    final results = await _connectivity.checkConnectivity();
+    if (results.length == 1 && results.first == ConnectivityResult.none) {
       return false;
     }
     return _internetChecker.hasInternet();
