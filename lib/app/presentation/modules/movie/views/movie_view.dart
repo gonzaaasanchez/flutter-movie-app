@@ -27,9 +27,9 @@ class MovieView extends StatelessWidget {
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: const MovieAppBar(),
-          /// TODO
-          //  .when: returns properties of the classes
-          //  .map: returns instance of the classes
+          /// TODO difference
+          // .when: returns properties of the classes
+          // .map: returns instance of the classes
           body: controller.state.map(
             loading: (_) => const Center(
               child: CircularProgressIndicator(),
